@@ -34,6 +34,16 @@ body {
     margin-top: 50px;
     width: 200px;
     align-self: center;
+    padding: 15px;
+    cursor: pointer;
+    border: none;
+    background-color: aliceblue;
+    border-radius: 10px;
+    transition: all .3s ease;
+    animation-duration: 2s;
+}
+#click-me:hover {
+    background-color: cornflowerblue;
 }
 
 #page-number {
@@ -52,8 +62,6 @@ body {
     height: 100px;
     width: 100px;
     background-color: aqua;
-    animation-name: example;
-    animation-duration: 2s;
 }
 
 @keyframes example {

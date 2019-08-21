@@ -36,28 +36,38 @@ const APIkeyTasksPost = 'https://repetitora.net/api/JS/Tasks'
 //   //columnWidth: '.grid-item',
 // });
 
+let ImagesState = {
+		isFirstLoad: false
+};
 
+const firstLoading = (flag) => {
+		ImagesState.isFirstLoad = flag;
+		clickMeButton.innerHTML = 'Show more'
+}
+
+window.ImagesState = ImagesState;
 
 const successGet = (data) => {
-  data.forEach(el => {
-    const img = document.createElement('img');
-    img.className = 'grid-item';
-    img.src = el.urls.thumb;
-    resultBlock.appendChild(img)
-  });
+		data.forEach(el => {
+				const img = document.createElement('img');
+				img.className = 'grid-item';
+				img.src = el.urls.thumb;
+				resultBlock.appendChild(img);
+				firstLoading(true);
+		});
 };
 
 const successGetPost = (data) => {
-  data.forEach(el => {
-    const li = document.createElement('li');
-    li.innerHTML = el.title;
-    resultTask.appendChild(li)
-  });
+		data.forEach(el => {
+				const li = document.createElement('li');
+				li.innerHTML = el.title;
+				resultTask.appendChild(li);
+		});
 };
 
 clickMeButton.addEventListener('click', () => {
-  const promise = getImagesAxios();
-  promise.then(data => successGet(data))
+		const promise = getImagesAxios();
+		promise.then(data => successGet(data))
 });
 
 // clickMeButton.addEventListener('click', () => {
@@ -66,91 +76,90 @@ clickMeButton.addEventListener('click', () => {
 //   })
 
 getTasksButton.addEventListener('click', () => {
-  const promise = getTasksAxios();
-  promise.then(data => successGetPost(data))
+		const promise = getTasksAxios();
+		promise.then(data => successGetPost(data))
 })
 
 
- //     jQeury    \\
+//     jQeury    \\
 function getImagesJQuery() {
-  const promise = $.ajax(APIkey)
-  return promise;
+		const promise = $.ajax(APIkey)
+		return promise;
 }
 
- //     Axios    \\
+//     Axios    \\
 
- function getImagesAxios() {
-  const promise = axios.get(APIkey)
-  return promise.then(response => response.data)
+function getImagesAxios() {
+		const promise = axios.get(APIkey)
+		return promise.then(response => response.data)
 }
 
 function getTasksAxios() {
-  const promise = axios.get(APIkeyTasksGet)
-  return promise.then(response => response.data)
+		const promise = axios.get(APIkeyTasksGet)
+		return promise.then(response => response.data)
 }
 
 function postTasksAxios() {
-  const promise = axios.post(APIkeyTasksPost, {
-    widgetId : 85429,
-    title : 'ZAKAZAKA'
-  });
-  return promise.then(response => response.data)
+		const promise = axios.post(APIkeyTasksPost, {
+				widgetId: 85429,
+				title: 'ZAKAZAKA'
+		});
+		return promise.then(response => response.data)
 }
 
 //postTasksAxios()
 
 function deleteTasksAxios(id) {
-  const promise = axios.delete(`https://repetitora.net/api/JS/Tasks?widgetId=85429&taskId=${id}`)
-  return promise.then(response => response.data)
+		const promise = axios.delete(`https://repetitora.net/api/JS/Tasks?widgetId=85429&taskId=${id}`)
+		return promise.then(response => response.data)
 }
 
 //deleteTasksAxios('567b82d6-c5e7-419e-91f1-eb4e00ffea60')
 
 //postTasksAxios();
 
- //     Fetch    \\
+//     Fetch    \\
 
-async function getImagesFetch () {
-  const response = await fetch(APIkey);
-  const data = await response.json();
-  return data;
+async function getImagesFetch() {
+		const response = await fetch(APIkey);
+		const data = await response.json();
+		return data;
 }
 
-async function getTasksFetch () {
-  const response = await fetch(APIkeyTasks);
-  const data = await response.json();
-  return data;
+async function getTasksFetch() {
+		const response = await fetch(APIkeyTasks);
+		const data = await response.json();
+		return data;
 }
 
-async function postTasksFetch () {
-  const response = await fetch(APIkeyTasksPost + '&title=WorkOut', {method: 'POST'});
-  const data = await response.json();
-  return data;
+async function postTasksFetch() {
+		const response = await fetch(APIkeyTasksPost + '&title=WorkOut', {method: 'POST'});
+		const data = await response.json();
+		return data;
 }
 
 class Man {
-  constructor(name, age) {
-    this.name = name;
-    this.age = age;
-    this.people = [
-      {name: 'Dima', age: 18},
-      {name: 'Julia', age: 19}
-    ];
-    this.Manelement = this.people.map(m => {
-      const man = document.createElement('li');
-      man.innerHTML = m.name;
-      document.querySelector('#resultTask').appendChild(man)
-    })
-  }
+		constructor(name, age) {
+				this.name = name;
+				this.age = age;
+				this.people = [
+						{name: 'Dima', age: 18},
+						{name: 'Julia', age: 19}
+				];
+				this.Manelement = this.people.map(m => {
+						const man = document.createElement('li');
+						man.innerHTML = m.name;
+						document.querySelector('#resultTask').appendChild(man)
+				})
+		}
 
-  render() {
-    return this.Manelement
-  }
+		render() {
+				return this.Manelement
+		}
 }
 
 let m1 = new Man('Dima', 31)
 m1.render();
-
 
 
 // postTasksFetch();
